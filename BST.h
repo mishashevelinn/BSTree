@@ -91,16 +91,16 @@ public:
         else {
             if (!left) {
                 BstNode<T> *temp = right;
-                delete this;
+                //delete this;
                 return temp;
             } else if (!right) {
                 BstNode<T> *temp = left;
-                delete this;
+                //delete this;
                 return temp;
             } else {
                 BstNode<T> *successor = right->min();
 
-                delete pData;
+                //delete pData;
                 pData = successor->pData;
                 right = right->Remove(target);
 
