@@ -4,12 +4,9 @@
 
 #ifndef BSTREE_BST_H
 #define BSTREE_BST_H
-//
-// Created by misha on 04/01/2021.
-//
 
-#ifndef DRONES_BST_H
-#define DRONES_BST_H
+
+
 #include <iostream>
 using namespace std;
 #include <malloc.h>
@@ -100,11 +97,9 @@ public:
                 return temp;
             } else {
                 BstNode<T> *successor = right->min();
-
                 delete pData;
                 pData = successor->pData;
                 right = right->Remove(target);
-
             }
         }
         return this;
@@ -119,8 +114,10 @@ public:
 
 template <class T>
 class Tree{
-public:
+private:
     BstNode<T> * root;
+    int size;
+public:
     virtual ~Tree(){
         while(root) {
             T *temp = root->getData();
@@ -128,17 +125,23 @@ public:
         }
         cout << "\nTree has been deleted";
     }
-
-    Tree(){
-        root = 0;
+    void clear(){
+        delete this;
     }
+
+    Tree():root(0), size(0){}
+
     void insert( T* data){
-        if(root == 0)
+        if(root == 0) {
             root = new BstNode<T>(data);
+            size++;
+        }
+        if(!search(data))
+            size++;
         root->Insert(data);
 
     }
-    T* Find(const T* target){
+    T* search(const T* target){
         BstNode<T> * retval = root->Find(target);
         return retval ? retval->getData() : 0;
     }
@@ -152,11 +155,12 @@ public:
     }
 
     void remove(T* target){
-        if(Find(target) == 0) {
+        if(root->Find(target) == 0) {
             cout << "No such element" << endl;
             return;
         }
         root = root->Remove(target);
+        size--;
     }
 
     friend ostream & operator<<(ostream& os, const Tree & rhs)
@@ -164,8 +168,10 @@ public:
         rhs.root->Inorder(rhs.root, os);
         return os;
     }
+    int get_size(){
+        return size;
+    }
 };
 
-#endif //DRONES_BST_H
 
 #endif //BSTREE_BST_H

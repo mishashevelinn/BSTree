@@ -8,8 +8,15 @@ int main() {
             t->insert(&i);
 
 }
-        cout << *t;
-        delete t;
+        int k = 3;
+        t->insert(&k);
+        t->remove(&k);
+        cout << *t << endl;
+
+        cout << t->get_size();
+
+
+
 
 
     return 0;
