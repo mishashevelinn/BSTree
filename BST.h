@@ -12,8 +12,9 @@
 #define DRONES_BST_H
 #include <iostream>
 using namespace std;
-
+#include <malloc.h>
 template<class T>
+
 class BstNode
 {
     BstNode<T> *left, *right;
@@ -91,16 +92,16 @@ public:
         else {
             if (!left) {
                 BstNode<T> *temp = right;
-                //delete this;
+                delete this;
                 return temp;
             } else if (!right) {
                 BstNode<T> *temp = left;
-                //delete this;
+                delete this;
                 return temp;
             } else {
                 BstNode<T> *successor = right->min();
 
-                //delete pData;
+                delete pData;
                 pData = successor->pData;
                 right = right->Remove(target);
 
@@ -112,6 +113,7 @@ public:
 
 
 
+
 };
 
 
@@ -119,6 +121,13 @@ template <class T>
 class Tree{
 public:
     BstNode<T> * root;
+    virtual ~Tree(){
+        while(root) {
+            T *temp = root->getData();
+            root = root->Remove(temp);
+        }
+        cout << "\nTree has been deleted";
+    }
 
     Tree(){
         root = 0;
